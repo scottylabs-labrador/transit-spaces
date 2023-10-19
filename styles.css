@@ -89,6 +89,21 @@ header {
     text-align: center;
 }
 
+#submit-button{
+    margin-left: 50px;
+    width: 100px;
+    height: 30px;
+}
+
+.locations{
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+#location-list{
+    margin-left: 100px;
+}
+
 label {
     display: block;
     margin-bottom: 5px;
