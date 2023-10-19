@@ -97,11 +97,26 @@ header {
 
 .locations{
     font-size: 25px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
+    border-width: 0px;
+    background-color: var(--grey);
+    cursor: pointer;
+}
+
+.list:hover {
+    transform: scale(1.05); 
 }
 
 #location-list{
-    margin-left: 100px;
+    margin-left: 150px;
+}
+
+#location1{
+    margin-top: 50px;
+}
+.list{
+    font-size: 25px;
+    transition: transform 0.2s;
 }
 
 label {
