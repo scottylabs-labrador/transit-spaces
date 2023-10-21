@@ -1,0 +1,160 @@
+
+:root{
+  --black: #333; 
+  --white: #fff; 
+  --grey: #d9d9d9; 
+}
+
+body, h1, p, button {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--grey);
+}
+
+header {
+  background-color: var(--black);
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.header-buttons{
+  margin-left: auto;
+}
+
+.header-buttons button{
+  color: var(--black);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.feedback-buttons button{
+  color: var(--black);
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.feedback-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#feedbackRequest {
+  text-align: center;
+  margin-top: 50px;
+}
+
+#YesBtn{
+  background-color: greenyellow;
+}
+
+#NoBtn{
+  background-color: red;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+}
+
+.main-buttons{
+  display: flex;
+  justify-content: center;
+  
+}
+.main-buttons button {
+  width: 500px;
+  height: 100px;
+  font-size: 24px;
+  color: var(--black);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  margin: 50px;
+}
+
+.title{
+  margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+.subtitle{
+  margin-left: 50px;
+  margin-bottom: 10px;
+  margin-top: 70px;
+}
+
+.centered-subtitle{
+  text-align: center;
+}
+
+.form-group {
+  display: inline-block; 
+  vertical-align: top;
+  margin-left: 50px;
+}
+
+.select-box {
+  width: 200px;
+  height: 30px; 
+}
+
+.red-asterisk {
+  color: red;
+}
+
+#asterisk-instructions{
+  color: red;
+  text-align: center;
+}
+
+#submit-button{
+  margin-left: 50px;
+  width: 100px;
+  height: 30px;
+}
+
+.locations{
+  font-size: 25px;
+  margin-bottom: 50px;
+  border-width: 0px;
+  background-color: var(--grey);
+  cursor: pointer;
+}
+
+.list:hover {
+  transform: scale(1.05); 
+}
+
+#location-list{
+  margin-left: 150px;
+}
+
+#location1{
+  margin-top: 50px; 
+}
+.list{
+  font-size: 25px;
+  transition: transform 0.2s; 
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
