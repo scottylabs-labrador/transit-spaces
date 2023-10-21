@@ -2,6 +2,28 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## transit-spaces
+### Running the website locally
+After cloning the git repository, run this in the terminal:
+```
+npm install
+npm install -g create-react-app
+```
+Once the installation is complete, start the React app with:
+```
+npm start
+```
+
+### Contributing to transit-spaces
+After making your changes, run this:
+```
+git checkout -b branch-name
+git add .
+git commit -am "Your commit message"
+git push origin branch-name
+```
+Then, make a pull request on GitHub to merge your changes from your branch to the main branch
+
 ## Available Scripts
 
 In the project directory, you can run:
