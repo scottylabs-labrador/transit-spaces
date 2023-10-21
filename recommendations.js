@@ -12,3 +12,17 @@ document.addEventListener("DOMContentLoaded", function() {
     result3.textContent = location3
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".locations");
+    buttons.forEach(button => {
+        button.addEventListener("click", function() {
+            const chosenLocation = button.textContent;
+            console.log("Chosen recommended location: " + chosenLocation);
+            localStorage.setItem("chosen location", chosenLocation)
+            window.location.href = "feedback.html";
+        });
+    });
+});
+
+
+
