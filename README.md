@@ -25,8 +25,8 @@ git push origin branch-name
 Then, make a pull request on GitHub to merge your changes from your branch to the main branch
 
 ### High-level ongoing tasks
-Connecting to a database like MySQL to store user feedback, probably developing backend with Node.js and Express
-Developing the Monte Carlo algorithm to predict space avaliability
+Connecting to a database like MySQL to store user feedback, probably developing backend with Node.js and Express   
+Developing the Monte Carlo algorithm to predict space avaliability  
 
 ## Available Scripts
 
