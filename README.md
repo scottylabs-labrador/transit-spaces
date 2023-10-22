@@ -13,6 +13,8 @@ Once the installation is complete, start the React app with:
 ```
 npm start
 ```
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.  
+Saved changes will automatically update to the webpage.  
 
 ### Contributing to transit-spaces
 After making your changes, run this:
