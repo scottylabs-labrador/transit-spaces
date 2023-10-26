@@ -21,7 +21,7 @@ After making your changes, run this:
 ```
 git checkout -b branch-name
 git add .
-git commit -am "Your commit message"
+git commit -m "Your commit message"
 git push origin branch-name
 ```
 Then, make a pull request on GitHub to merge your changes from your branch to the main branch
