@@ -1,28 +1,21 @@
-
 const express = require('express');
-const bodyParser = require('body-parser');
-const mysql = require('mysql');
-
+const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
 
-// const db = mysql.createConnection({
-//     host: 
-//     user: 
-//     password: 
-//     database: 
-// });
+app.use(express.json());
+app.use(cors());
 
-db.connect((err) => {
-    if (err) {
-        console.error('Database connection error:', err);
-    } else {
-        console.log('Connected to the MySQL database');
-    }
+// Define a recommendation endpoint 
+app.post('/recommendation', (req, res) => {
+  const { buildingStart, floor, room, buildingEnd, space, busyness } = req.body;
+
+  const recommendations = giveRecommendation(buildingStart, floor, room, buildingEnd, space, busyness);
+  
+  res.json({ recommendations });
 });
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
