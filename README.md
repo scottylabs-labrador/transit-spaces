@@ -28,6 +28,7 @@ Then, make a pull request on GitHub to merge your changes from your branch to th
 
 ### High-level ongoing tasks
 Connecting to a database like MySQL to store user feedback, probably developing backend with Node.js and Express   
+Maybe build an API server to retrieve and send data, which then connects to the database    
 Developing the Monte Carlo algorithm to predict space avaliability  
 
 ## Available Scripts
