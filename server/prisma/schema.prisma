@@ -13,9 +13,16 @@ datasource db {
 model Building {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String @unique
+  Seat Seat[]
 }
 
 model Seat {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @unique
+  id                        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                      String   @unique
+  building                  Building @relation(fields: [buildingId], references: [id])
+  capacity                  Int
+  floor                     Int
+  lastUpdatedAt             DateTime
+  predictedUnavailableUntil DateTime
+  buildingId                String   @db.ObjectId
 }
