@@ -23,7 +23,7 @@ export const updateAvailability = async (
       
       const minLastUpdatedAt = new Date(new Date().getTime() - lockTime * 60000);
 
-      if (minLastUpdatedAt > seat.lastUpdatedAt) {
+      if (seat && minLastUpdatedAt > seat.lastUpdatedAt) {
         await prisma.seat.update({
           where: {
             id: seatId
