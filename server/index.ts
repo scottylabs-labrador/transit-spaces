@@ -8,6 +8,7 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 4000;
+app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("CMUSeats Backend");
