@@ -8,7 +8,6 @@ export const updateAvailability = async (
   res: Response
 ): Promise<void> => {
   try {
-    // TODO: implement updateAvailability logic here.
     const payload = req.body;
 
     const seatId = payload.seatId; // string representing seat id
