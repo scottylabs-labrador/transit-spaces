@@ -172,3 +172,40 @@ label {
   display: block;
   margin-bottom: 5px;
 }
+
+#thankYou{
+  text-align: center;
+  margin-top: 50px;
+}
+
+#thankYouMessage{
+  max-width: 80vw;
+  margin: 0 auto;
+}
+#LeaveNowBtn{
+  margin-top: 30px;
+  width: 25vw;
+  height: 4vw;
+  font-size: 2vw;
+}
+
+@media only screen and (max-width: 600px) {
+  #LeaveNowBtn{
+    margin-top: 30px;
+    width: 50vw;
+    height: 10vw;
+    font-size: 5vw;
+  }
+}
+
+#recommendationsMessage{
+  display: flex;
+  justify-content: center;
+  
+  font-size: x-large;
+  text-align: center;
+  max-width: 85%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
