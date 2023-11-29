@@ -1,8 +1,7 @@
-
-:root{
-  --black: #333; 
-  --white: #fff; 
-  --grey: #d9d9d9; 
+:root {
+  --black: #333;
+  --white: #fff;
+  --grey: #d9d9d9;
 }
 
 body, h1, p, button {
@@ -13,6 +12,8 @@ body, h1, p, button {
 body {
   font-family: Arial, sans-serif;
   background-color: var(--grey);
+  max-width: 100%;
+  overflow-x: hidden; 
 }
 
 header {
@@ -22,21 +23,16 @@ header {
   padding: 10px 20px;
 }
 
-.header-buttons{
+.header-buttons {
   margin-left: auto;
 }
 
-.header-buttons button{
+.header-buttons button,
+.feedback-buttons button,
+.main-buttons button,
+#submit-button {
   color: var(--black);
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin: 0 10px;
-}
-
-.feedback-buttons button{
-  color: var(--black);
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
@@ -55,11 +51,11 @@ header {
   margin-top: 50px;
 }
 
-#YesBtn{
+#YesBtn {
   background-color: greenyellow;
 }
 
-#NoBtn{
+#NoBtn {
   background-color: red;
 }
 
@@ -68,93 +64,111 @@ header {
   height: 50px;
 }
 
-.main-buttons{
+.main-buttons {
   display: flex;
-  justify-content: center;
-  
+  flex-direction: column; 
+  align-items: center;
 }
+
 .main-buttons button {
-  width: 500px;
-  height: 100px;
-  font-size: 24px;
+  width: 50vw;
+  height: 7vw;
+  font-size: 2vw;
   color: var(--black);
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
   text-align: center;
-  margin: 50px;
+  margin: 10px; 
+  margin-top: 50px;
 }
 
-.title{
+
+@media screen and (max-width: 768px) {
+  .main-buttons button {
+    width: 70vw; 
+    height: 20vw;
+    font-size: 6vw; 
+  }
+}
+
+.title {
   margin-bottom: 20px;
   margin-top: 20px;
   text-align: center;
 }
 
-
-.subtitle{
-  margin-left: 50px;
-  margin-bottom: 10px;
-  margin-top: 70px;
+.select-box select {
+  max-width: 80%;
+  box-sizing: border-box;
 }
 
-.centered-subtitle{
+.subtitle {
+  margin-left: 5%;
+  margin-bottom: 10px;
+  margin-top: 5%;
+}
+
+.centered-subtitle {
   text-align: center;
 }
 
 .form-group {
-  display: inline-block; 
-  vertical-align: top;
-  margin-left: 50px;
+  display: block;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .select-box {
-  width: 200px;
-  height: 30px; 
+  width: 100%;
+  height: 30px;
 }
 
 .red-asterisk {
   color: red;
 }
 
-#asterisk-instructions{
+#asterisk-instructions {
   color: red;
   text-align: center;
 }
 
-#submit-button{
-  margin-left: 50px;
-  width: 100px;
+#submit-button {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  margin-left: 5%;
+  width: 90%;
   height: 30px;
 }
 
-.locations{
+.locations {
   font-size: 25px;
   margin-bottom: 50px;
   border-width: 0px;
   background-color: var(--grey);
   cursor: pointer;
+  text-align: left;
 }
 
 .list:hover {
-  transform: scale(1.05); 
+  transform: scale(1.05);
 }
 
-#location-list{
-  margin-left: 150px;
+#location-list {
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-#location1{
-  margin-top: 50px; 
+#location1 {
+  margin-top: 5%;
 }
-.list{
+.list {
   font-size: 25px;
-  transition: transform 0.2s; 
+  transition: transform 0.2s;
 }
 
 label {
   display: block;
   margin-bottom: 5px;
 }
-
