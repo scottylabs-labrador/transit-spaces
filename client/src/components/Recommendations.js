@@ -10,10 +10,9 @@ function Recommendations() {
   };
 
   const [state, setState] = useState(initialLocations);
+  const [recommendationsMessage, setRecommendationsMessage] = useState("");
 
   useEffect(() => {
-    // we retrieve "["location1", "location2", "location3"]" as a string
-    // we convert it to an array, then remove all quotes for each element
     const locationsStr = localStorage.getItem("locations");
     const locationsArray = JSON.parse(locationsStr);
     const removeQuotes = locationsArray.map((element) => element.replace(/"/g, ''));
@@ -26,46 +25,55 @@ function Recommendations() {
       location2,
       location3,
     });
+
+    // Retrieve sorry message if it exists, and then remove it
+    const storedMessage = localStorage.getItem("newRecommendationsMessage");
+    if (storedMessage) {
+      setRecommendationsMessage(storedMessage);
+      localStorage.removeItem("newRecommendationsMessage");
+    }
   }, []); 
 
   const handleLocationClick = (chosenLocation) => {
-    console.log("Chosen recommended location: " + chosenLocation);
     localStorage.setItem("chosen location", chosenLocation);
     navigate('/feedback');
   };
 
   return (
     <div>
-        <h1 className="title">Recommendations:</h1>
-        <ol id="location-list">
-          <li className="list">
-            <button
-              id="location1"
-              className="locations"
-              onClick={() => handleLocationClick(state.location1)}
-            >
-              {state.location1}
-            </button>
-          </li>
-          <li className="list">
-            <button
-              id="location2"
-              className="locations"
-              onClick={() => handleLocationClick(state.location2)}
-            >
-              {state.location2}
-            </button>
-          </li>
-          <li className="list">
-            <button
-              id="location3"
-              className="locations"
-              onClick={() => handleLocationClick(state.location3)}
-            >
-              {state.location3}
-            </button>
-          </li>
-        </ol>
+      {recommendationsMessage ? null : <h1 className="title">Recommendations:</h1>}
+      {recommendationsMessage && (
+        <p id="recommendationsMessage">{recommendationsMessage}</p>
+      )}
+      <ol id="location-list">
+        <li className="list">
+          <button
+            id="location1"
+            className="locations"
+            onClick={() => handleLocationClick(state.location1)}
+          >
+            {state.location1}
+          </button>
+        </li>
+        <li className="list">
+          <button
+            id="location2"
+            className="locations"
+            onClick={() => handleLocationClick(state.location2)}
+          >
+            {state.location2}
+          </button>
+        </li>
+        <li className="list">
+          <button
+            id="location3"
+            className="locations"
+            onClick={() => handleLocationClick(state.location3)}
+          >
+            {state.location3}
+          </button>
+        </li>
+      </ol>
     </div>
   );
 }
