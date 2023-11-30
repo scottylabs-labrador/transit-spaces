@@ -27,21 +27,32 @@ function Feedback() {
     const selectedTimeRequirement = parseInt(localStorage.getItem("selectedTimeRequirement"));
 
     axios({
-      url: "http://localhost:4000/getRecommendation",
-      method: "POST",
-      data: {
-        "buildingId": selectedBuilding,
-        "floor": selectedFloor,
-        "capacity": selectedCapacity,
-        "timeRequirement": selectedTimeRequirement
-      },
-    }).then((res) => {
-      localStorage.setItem("recommendedSeats", JSON.stringify([res.data]));
-      localStorage.setItem("newRecommendationsMessage", newRecommendationsMessage);
-      navigate('/recommendations');
+      url: "http://localhost:4000/updateAvailability",
+      method: "PUT",
+      data:{
+        "seatId": chosenSeat.id,
+        "wasAvailable": false,
+      }
+    }).then(() => {
+      axios({
+        url: "http://localhost:4000/getRecommendation",
+        method: "POST",
+        data: {
+          "buildingId": selectedBuilding,
+          "floor": selectedFloor,
+          "capacity": selectedCapacity,
+          "timeRequirement": selectedTimeRequirement
+        },
+      }).then((res) => {
+        localStorage.setItem("recommendedSeats", JSON.stringify([res.data]));
+        localStorage.setItem("newRecommendationsMessage", newRecommendationsMessage);
+        navigate('/recommendations');
+      }).catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
     }).catch((err) => {
       console.log(err);
-      setIsLoading(false);
     });
   };
 
