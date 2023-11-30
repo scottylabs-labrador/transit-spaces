@@ -10,7 +10,7 @@ function Feedback() {
 
   useEffect(() => {
     const storedChosenSeat = JSON.parse(localStorage.getItem('chosenSeat'));
-    if (!chosenSeat) navigate('/');
+    if (!storedChosenSeat) navigate('/');
     setChosenSeat(storedChosenSeat);
   }, []);
 
