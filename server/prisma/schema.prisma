@@ -11,9 +11,10 @@ datasource db {
 }
 
 model Building {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @unique
-  Seat Seat[]
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  name   String   @unique
+  floors String[]
+  Seat   Seat[]
 }
 
 model Seat {
