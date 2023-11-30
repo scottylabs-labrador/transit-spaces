@@ -3,28 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 function Recommendations() {
   const navigate = useNavigate();
-  const initialLocations = {
-    location1: "",
-    location2: "",
-    location3: "",
-  };
 
-  const [state, setState] = useState(initialLocations);
+  const [locations, setLocations] = useState([]);
   const [recommendationsMessage, setRecommendationsMessage] = useState("");
 
   useEffect(() => {
     const locationsStr = localStorage.getItem("locations");
     const locationsArray = JSON.parse(locationsStr);
-    const removeQuotes = locationsArray.map((element) => element.replace(/"/g, ''));
-    const location1 = removeQuotes[0];
-    const location2 = removeQuotes[1];
-    const location3 = removeQuotes[2];
+    setLocations(locationsArray);
 
-    setState({
-      location1,
-      location2,
-      location3,
-    });
 
     // Retrieve sorry message if it exists, and then remove it
     const storedMessage = localStorage.getItem("newRecommendationsMessage");
@@ -35,7 +22,7 @@ function Recommendations() {
   }, []); 
 
   const handleLocationClick = (chosenLocation) => {
-    localStorage.setItem("chosen location", chosenLocation);
+    localStorage.setItem("chosen location", JSON.stringify(chosenLocation));
     navigate('/feedback');
   };
 
@@ -46,33 +33,18 @@ function Recommendations() {
         <p id="recommendationsMessage">{recommendationsMessage}</p>
       )}
       <ol id="location-list">
-        <li className="list">
-          <button
-            id="location1"
-            className="locations"
-            onClick={() => handleLocationClick(state.location1)}
-          >
-            {state.location1}
-          </button>
-        </li>
-        <li className="list">
-          <button
-            id="location2"
-            className="locations"
-            onClick={() => handleLocationClick(state.location2)}
-          >
-            {state.location2}
-          </button>
-        </li>
-        <li className="list">
-          <button
-            id="location3"
-            className="locations"
-            onClick={() => handleLocationClick(state.location3)}
-          >
-            {state.location3}
-          </button>
-        </li>
+        {
+          locations.map((location, i) => {
+            return (<li className="list" key={i}>
+              <button
+                className="locations"
+                onClick={() => handleLocationClick(location)}
+              >
+                {location.name}
+              </button>
+            </li>)
+          })
+        }
       </ol>
     </div>
   );
