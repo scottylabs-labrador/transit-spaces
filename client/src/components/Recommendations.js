@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom';
 function Recommendations() {
   const navigate = useNavigate();
 
-  const [locations, setLocations] = useState([]);
+  const [recommendedSeats, setRecommendedSeats] = useState([]);
   const [recommendationsMessage, setRecommendationsMessage] = useState("");
 
   useEffect(() => {
-    const locationsStr = localStorage.getItem("locations");
-    const locationsArray = JSON.parse(locationsStr);
-    setLocations(locationsArray);
+    const storedRecommendedSeats = JSON.parse(localStorage.getItem("recommendedSeats"));
+    setRecommendedSeats(storedRecommendedSeats);
 
 
     // Retrieve sorry message if it exists, and then remove it
@@ -21,8 +20,8 @@ function Recommendations() {
     }
   }, []); 
 
-  const handleLocationClick = (chosenLocation) => {
-    localStorage.setItem("chosen location", JSON.stringify(chosenLocation));
+  const handleSeatClick = (chosenSeat) => {
+    localStorage.setItem("chosenSeat", JSON.stringify(chosenSeat));
     navigate('/feedback');
   };
 
@@ -32,15 +31,15 @@ function Recommendations() {
       {recommendationsMessage && (
         <p id="recommendationsMessage">{recommendationsMessage}</p>
       )}
-      <ol id="location-list">
+      <ol id="seat-list">
         {
-          locations.map((location, i) => {
+          recommendedSeats.map((seat, i) => {
             return (<li className="list" key={i}>
               <button
-                className="locations"
-                onClick={() => handleLocationClick(location)}
+                className="seats"
+                onClick={() => handleSeatClick(seat)}
               >
-                {location.name}
+                {seat.name}
               </button>
             </li>)
           })

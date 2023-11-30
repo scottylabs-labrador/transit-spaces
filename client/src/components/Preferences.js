@@ -27,8 +27,8 @@ function Preferences() {
       event.preventDefault();
 
       if (selectedBuilding !== "") {
-        const locations = await getRecommendation();
-        localStorage.setItem("locations", JSON.stringify(locations));
+        const recommendedSeats = await getRecommendation();
+        localStorage.setItem("recommendedSeats", JSON.stringify(recommendedSeats));
         navigate('/recommendations');
       } else {
         alert("Please fill in the required fields");
@@ -37,6 +37,11 @@ function Preferences() {
   
     const  getRecommendation = async () => {
       setIsLoading(true);
+
+      localStorage.setItem("selectedBuilding", selectedBuilding);
+      localStorage.setItem("selectedFloor", selectedFloor.toString());
+      localStorage.setItem("selectedCapacity", selectedCapacity.toString());
+      localStorage.setItem("selectedTimeRequirement", selectedTimeRequirement.toString());
 
       const res = await axios({
         url: "http://localhost:4000/getRecommendation",
@@ -48,7 +53,7 @@ function Preferences() {
           "timeRequirement": selectedTimeRequirement
         },
       }).catch((err) => {
-        console.log(err)
+        console.log(err);
       });
       if (res) return [res.data];
       return [];

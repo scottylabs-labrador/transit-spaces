@@ -142,7 +142,7 @@ header {
   height: 30px;
 }
 
-.locations {
+.seats {
   font-size: 25px;
   margin-bottom: 50px;
   border-width: 0px;
@@ -155,7 +155,7 @@ header {
   transform: scale(1.05);
 }
 
-#location-list {
+#seat-list {
   margin-left: 5%;
   margin-right: 5%;
 }
