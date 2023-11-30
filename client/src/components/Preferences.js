@@ -38,8 +38,6 @@ function Preferences() {
     async function giveRecommendation(){
       setIsLoading(true);
 
-      console.log(selectedFloor);
-
       const res = await axios({
         url: "http://localhost:4000/getRecommendation",
         method: "POST",
