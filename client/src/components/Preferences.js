@@ -27,7 +27,7 @@ function Preferences() {
       event.preventDefault();
 
       if (selectedBuilding !== "") {
-        const locations = await giveRecommendation();
+        const locations = await getRecommendation();
         localStorage.setItem("locations", JSON.stringify(locations));
         navigate('/recommendations');
       } else {
@@ -35,7 +35,7 @@ function Preferences() {
       }
     };
   
-    async function giveRecommendation(){
+    const  getRecommendation = async () => {
       setIsLoading(true);
 
       const res = await axios({
@@ -54,13 +54,13 @@ function Preferences() {
       return [];
     }
 
-    function getBuildings() {
+    const getBuildings = () => {
       return buildings.map((building, i) => {
         return (<option value={building.id} key={i}>{building.name}</option>)
       });
     }
 
-    function getFloors() {
+    const getFloors = () => {
       const building = buildings.find((b) => b.id === selectedBuilding);
       if (building) {
         return building.floors.map((floor, i) => {
@@ -69,13 +69,13 @@ function Preferences() {
       }
     }
 
-    function getCapacities() {
+    const getCapacities = () => {
       return [1,2,3,4].map((capacity, i) => {
         return (<option value={capacity} key={i}>{capacity}</option>)
       });
     }
 
-    function getTimeRequirements() {
+    const getTimeRequirements = () => {
       return [
         <option value={10} key={1}>10min</option>,
         <option value={20} key={2}>20min</option>,
