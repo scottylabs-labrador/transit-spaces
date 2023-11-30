@@ -9,8 +9,8 @@ function Recommendations() {
 
   useEffect(() => {
     const storedRecommendedSeats = JSON.parse(localStorage.getItem("recommendedSeats"));
+    if (!storedRecommendedSeats) navigate('/');
     setRecommendedSeats(storedRecommendedSeats);
-
 
     // Retrieve sorry message if it exists, and then remove it
     const storedMessage = localStorage.getItem("newRecommendationsMessage");
