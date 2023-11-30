@@ -25,4 +25,5 @@ model Seat {
   lastUpdatedAt             DateTime
   predictedUnavailableUntil DateTime
   buildingId                String   @db.ObjectId
+  photo                     String
 }
