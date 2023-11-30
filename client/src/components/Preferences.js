@@ -14,7 +14,7 @@ function Preferences() {
 
     useEffect(() => {
       axios({
-        url: "http://localhost:4000/getBuildings",
+        url: "https://cmu-seats.onrender.com/getBuildings",
         method: "GET"
       }).then((res)=>{
         setBuildings(res.data);
@@ -35,16 +35,15 @@ function Preferences() {
       }
     };
   
-    const  getRecommendation = async () => {
+    const getRecommendation = async () => {
       setIsLoading(true);
 
       localStorage.setItem("selectedBuilding", selectedBuilding);
       localStorage.setItem("selectedFloor", selectedFloor.toString());
       localStorage.setItem("selectedCapacity", selectedCapacity.toString());
       localStorage.setItem("selectedTimeRequirement", selectedTimeRequirement.toString());
-
       const res = await axios({
-        url: "http://localhost:4000/getRecommendation",
+        url: "https://cmu-seats.onrender.com/getRecommendation",
         method: "POST",
         data: {
           "buildingId": selectedBuilding,

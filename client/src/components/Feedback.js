@@ -28,7 +28,7 @@ function Feedback() {
     const selectedTimeRequirement = parseInt(localStorage.getItem("selectedTimeRequirement"));
 
     axios({
-      url: "http://localhost:4000/updateAvailability",
+      url: "https://cmu-seats.onrender.com/updateAvailability",
       method: "PUT",
       data:{
         "seatId": chosenSeat.id,
@@ -36,7 +36,7 @@ function Feedback() {
       }
     }).then(() => {
       axios({
-        url: "http://localhost:4000/getRecommendation",
+        url: "https://cmu-seats.onrender.com/getRecommendation",
         method: "POST",
         data: {
           "buildingId": selectedBuilding,
