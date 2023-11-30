@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 function Feedback() {
-  const [chosenLocation, setChosenLocation] = useState('');
+  const [chosenSeat, setChosenSeat] = useState('');
   const [showButtons, setShowButtons] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedLocation = localStorage.getItem('chosen location');
-    setChosenLocation(storedLocation);
+    const storedChosenSeat = JSON.parse(localStorage.getItem('chosenSeat'));
+    setChosenSeat(storedChosenSeat);
   }, []);
 
   const handleYesClick = () => {
@@ -16,9 +18,31 @@ function Feedback() {
   };
 
   const handleNoClick = () => {
-    const newRecommendationsMessage = "Sorry about that! Here are three new recommendations for you:";
-    localStorage.setItem("newRecommendationsMessage", newRecommendationsMessage);
-    navigate('/recommendations');
+    const newRecommendationsMessage = "Sorry about that! Here is a new recommendations for you:";
+    setIsLoading(true);
+
+    const selectedBuilding = localStorage.getItem("selectedBuilding");
+    const selectedFloor = parseInt(localStorage.getItem("selectedFloor"));
+    const selectedCapacity = parseInt(localStorage.getItem("selectedCapacity"));
+    const selectedTimeRequirement = parseInt(localStorage.getItem("selectedTimeRequirement"));
+
+    axios({
+      url: "http://localhost:4000/getRecommendation",
+      method: "POST",
+      data: {
+        "buildingId": selectedBuilding,
+        "floor": selectedFloor,
+        "capacity": selectedCapacity,
+        "timeRequirement": selectedTimeRequirement
+      },
+    }).then((res) => {
+      localStorage.setItem("recommendedSeats", JSON.stringify([res.data]));
+      localStorage.setItem("newRecommendationsMessage", newRecommendationsMessage);
+      navigate('/recommendations');
+    }).catch((err) => {
+      console.log(err);
+      setIsLoading(false);
+    });
   };
 
   const handleLeaveNowClick = () => {
@@ -30,7 +54,9 @@ function Feedback() {
     <div>
       <h2 className="title">Chosen Location:</h2>
       <h1 className="centered-subtitle" id="chosenLocationDisplay">
-        {chosenLocation}
+        {chosenSeat.name}
+        <br/>
+        <img src={chosenSeat.photo} alt={"Location"} height={"30%"} width={"30%"}/>
       </h1>
       {showButtons ? (
         <div>
@@ -39,7 +65,7 @@ function Feedback() {
             <button id="YesBtn" onClick={handleYesClick}>
               Yes
             </button>
-            <button id="NoBtn" onClick={handleNoClick}>
+            <button id="NoBtn" onClick={handleNoClick} disabled={isLoading}>
               No
             </button>
           </div>
