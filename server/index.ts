@@ -1,9 +1,10 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import { asyncCatch } from "./util/asyncCatch";
 import { getRecommendation } from "./controllers/RecommendationsController";
 import { updateAvailability } from "./controllers/UpdateController";
-import cors from "cors";
+import { getBuildings } from "./controllers/BuildingsController";
 
 dotenv.config();
 
@@ -17,8 +18,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.post("/getRecommendation", asyncCatch(getRecommendation));
-
 app.put("/updateAvailability", asyncCatch(updateAvailability));
+app.get("/getBuildings", asyncCatch(getBuildings));
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
