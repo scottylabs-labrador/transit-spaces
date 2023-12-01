@@ -1,110 +1,199 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Preferences() {
-    const navigate = useNavigate();
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      const buildingStart = document.getElementById("building-start");
-      const floor = document.getElementById("floor");
-      const room = document.getElementById("room");
-      const buildingEnd = document.getElementById("building-end");
-      const space = document.getElementById("space-type");
-      const busyness = document.getElementById("busyness");
-      
-      if (buildingStart.value.trim() !== "") {
-        console.log("all required fields were filled");
-        const locations = giveRecommendation(buildingStart, floor, room, buildingEnd, space, busyness);
-        console.log(locations);
-        localStorage.setItem("locations", JSON.stringify(locations));
-        navigate('/recommendations');
-      } else {
-        console.log("some required fields were empty");
-        alert("Please fill in the required fields");
-      }
-    };
-  
-    function giveRecommendation(buildingStart, floor, room, buildingEnd, space, busyness){
-      return ["GHC F3 cafe cluster", "GHC F6 collaborative commons", "GHC F5 tables"];
-    }
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [buildings, setBuildings] = useState([]);
+  const [selectedBuilding, setSelectedBuilding] = useState("");
+  const [selectedFloor, setSelectedFloor] = useState(0);
+  const [selectedCapacity, setSelectedCapacity] = useState(0);
+  const [selectedTimeRequirement, setSelectedTimeRequirement] = useState(0);
 
-    return (
-        <div>
-          <h1 className="title">Input your preferences</h1>
-          <p id='asterisk-instructions'>* Indicates required question</p>
-          <h2 className="subtitle">Start location:</h2>
-          <section className="starting-location">
-            <form>
-              <div className="form-group">
-                <label htmlFor="building-start">Building<span className="red-asterisk">*</span></label>
-                <select id="building-start" className="select-box" required>
-                  <option value="" disabled selected>Select</option>
-                  <option value="GHC">GHC</option>
-                  <option value="CUC">CUC</option>
-                </select>
-              </div>
-    
-              <div className="form-group">
-                <label htmlFor="floor">Floor</label>
-                <select id="floor" className="select-box">
-                  <option value="">Select</option>
-                  <option value="F1">F1</option>
-                  <option value="F2">F2</option>
-                  <option value="F3">F3</option>
-                </select>
-              </div>
-    
-              <div className="form-group">
-                <label htmlFor="room">Room</label>
-                <select id="room" className="select-box">
-                  <option value="">Select</option>
-                  <option value="Rangos">Rangos</option>
-                  <option value="McConomy">McConomy</option>
-                </select>
-              </div>
-            </form>
-          </section>
-    
-          <h2 className="subtitle">Destination options:</h2>
-          <section className="destination-options">
-            <form>
-              <div className="form-group">
-                <label htmlFor="building-end">Building</label>
-                <select id="building-end" className="select-box">
-                  <option value="">Select</option>
-                  <option value="GHC">GHC</option>
-                  <option value="CUC">CUC</option>
-                </select>
-              </div>
-    
-              <div className="form-group">
-                <label htmlFor="space-type">Type of space</label>
-                <select id="space-type" className="select-box">
-                  <option value="">Select</option>
-                  <option value="Single-study">Single study</option>
-                  <option value="Group-study">Group study</option>
-                  <option value="Eat">Eat</option>
-                </select>
-              </div>
-    
-              <div className="form-group">
-                <label htmlFor="busyness">Busyness level</label>
-                <select id="busyness" className="select-box">
-                  <option value="">Select</option>
-                  <option value="Complete">Completely empty</option>
-                  <option value="Slightly">Slightly busy</option>
-                  <option value="Moderately">Moderately busy</option>
-                </select>
-                <button id="submit-button" onClick={handleSubmit}>Submit</button>
-                {/*Link is not used for the submit button because when clicked, it goes directly to the handleSubmit function*/}
-                {/*Thus, we import useNavigate to switch to the Recommendations page within the handleSubmit function*/}
-              </div>
-              
-            </form>
-          </section>
-        </div>
+  useEffect(() => {
+    axios({
+      url: "https://cmu-seats.onrender.com/getBuildings",
+      method: "GET",
+    })
+      .then((res) => {
+        setBuildings(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [navigate]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (selectedBuilding !== "") {
+      const recommendedSeats = await getRecommendation();
+      localStorage.setItem(
+        "recommendedSeats",
+        JSON.stringify(recommendedSeats)
       );
+      navigate("/recommendations");
+    } else {
+      alert("Please fill in the required fields");
     }
-    
-    export default Preferences;
+  };
+
+  const getRecommendation = async () => {
+    setIsLoading(true);
+
+    localStorage.setItem("selectedBuilding", selectedBuilding);
+    localStorage.setItem("selectedFloor", selectedFloor.toString());
+    localStorage.setItem("selectedCapacity", selectedCapacity.toString());
+    localStorage.setItem(
+      "selectedTimeRequirement",
+      selectedTimeRequirement.toString()
+    );
+    const res = await axios({
+      url: "https://cmu-seats.onrender.com/getRecommendation",
+      method: "POST",
+      data: {
+        buildingId: selectedBuilding,
+        floor: selectedFloor,
+        capacity: selectedCapacity,
+        timeRequirement: selectedTimeRequirement,
+      },
+    }).catch((err) => {
+      console.log(err);
+    });
+    if (res) return [res.data];
+    return [];
+  };
+
+  const getBuildings = () => {
+    return buildings.map((building, i) => {
+      return (
+        <option value={building.id} key={i}>
+          {building.name}
+        </option>
+      );
+    });
+  };
+
+  const getFloors = () => {
+    const building = buildings.find((b) => b.id === selectedBuilding);
+    if (building) {
+      return building.floors.map((floor, i) => {
+        return (
+          <option value={floor} key={i}>
+            {floor}
+          </option>
+        );
+      });
+    }
+  };
+
+  const getCapacities = () => {
+    return [1, 2, 3, 4].map((capacity, i) => {
+      return (
+        <option value={capacity} key={i}>
+          {capacity}
+        </option>
+      );
+    });
+  };
+
+  const getTimeRequirements = () => {
+    return [
+      <option value={10} key={1}>
+        10min
+      </option>,
+      <option value={20} key={2}>
+        20min
+      </option>,
+      <option value={30} key={3}>
+        30min
+      </option>,
+      <option value={60} key={4}>
+        1h
+      </option>,
+    ];
+  };
+
+  return (
+    <div>
+      <h1 className="title">Input your preferences</h1>
+      <p id="asterisk-instructions">* Indicates required question</p>
+      <form>
+        <div className="form-group">
+          <label htmlFor="building">
+            Building<span className="red-asterisk">*</span>
+          </label>
+          <select
+            id="building"
+            className="select-box"
+            required
+            onChange={(e) => {
+              setSelectedBuilding(e.target.value);
+              setSelectedFloor(0);
+            }}
+          >
+            <option value="" disabled>
+              Select
+            </option>
+            {getBuildings()}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="floor">Floor</label>
+          <select
+            id="floor"
+            className="select-box"
+            onChange={(e) => {
+              setSelectedFloor(parseInt(e.target.value));
+            }}
+            value={selectedFloor}
+          >
+            <option value={0}>Select</option>
+            {getFloors()}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="capacity">Capacity</label>
+          <select
+            id="capacity"
+            className="select-box"
+            onChange={(e) => {
+              setSelectedCapacity(parseInt(e.target.value));
+            }}
+          >
+            <option value="">Select</option>
+            {getCapacities()}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="time-requirement">Time Requirement</label>
+          <select
+            id="time-requirement"
+            className="select-box"
+            onChange={(e) => {
+              setSelectedTimeRequirement(parseInt(e.target.value));
+            }}
+          >
+            <option value="">Select</option>
+            {getTimeRequirements()}
+          </select>
+        </div>
+        <div className="form-group">
+          <button
+            id="submit-button"
+            onClick={handleSubmit}
+            disabled={isLoading}
+          >
+            Submit
+          </button>
+          {/*Link is not used for the submit button because when clicked, it goes directly to the handleSubmit function*/}
+          {/*Thus, we import useNavigate to switch to the Recommendations page within the handleSubmit function*/}
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default Preferences;
