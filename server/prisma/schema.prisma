@@ -11,9 +11,10 @@ datasource db {
 }
 
 model Building {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @unique
-  Seat Seat[]
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String @unique
+  floors Int[]
+  Seat   Seat[]
 }
 
 model Seat {
@@ -25,4 +26,5 @@ model Seat {
   lastUpdatedAt             DateTime
   predictedUnavailableUntil DateTime
   buildingId                String   @db.ObjectId
+  photo                     String
 }
