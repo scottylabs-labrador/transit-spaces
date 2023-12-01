@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Recommendations() {
+  // Leaving this here in case we want to recommend more than one option in the future
   const navigate = useNavigate();
 
   const [recommendedSeats, setRecommendedSeats] = useState([]);
