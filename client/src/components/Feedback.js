@@ -12,7 +12,7 @@ function Feedback() {
     const storedChosenSeat = JSON.parse(localStorage.getItem('chosenSeat'));
     if (!storedChosenSeat) navigate('/');
     setChosenSeat(storedChosenSeat);
-  }, []);
+  });
 
   const handleYesClick = () => {
     setShowButtons(false);

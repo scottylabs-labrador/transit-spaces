@@ -21,7 +21,7 @@ function Preferences() {
       }).catch((err) => {
         console.log(err);
       });
-    }, []);
+    });
 
     const handleSubmit = async (event) => {
       event.preventDefault();
