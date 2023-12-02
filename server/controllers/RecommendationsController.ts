@@ -55,8 +55,8 @@ export const getRecommendation = async (
         return a.predictedUnavailableUntil.getTime() - b.predictedUnavailableUntil.getTime();
       })
     }
-    const seat = seats[0]
 
+    const seat = seats[0];
 
     // Update seat lastUpdatedAt to currentTime, predictedUnavailableUntil to currentTime + timeRequirement
     seat.lastUpdatedAt = new Date();
