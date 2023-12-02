@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import Header from './components/Header';
-import MainButtons from './components/MainButtons';
+//import MainButtons from './components/MainButtons';
 import Preferences from './components/Preferences';
-import Recommendations from './components/Recommendations';
+//import Recommendations from './components/Recommendations';
 import Feedback from './components/Feedback';
 
 function App() {
@@ -15,9 +15,7 @@ function App() {
       <div className='App'>
       <Header />
         <Routes>
-          <Route path="/" element={<MainButtons />} />
-          <Route path="/preferences" element={<Preferences />} />
-          <Route path="/recommendations" element={<Recommendations />} />
+          <Route path="/" element={<Preferences />} />
           <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </div>

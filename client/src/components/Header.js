@@ -10,10 +10,6 @@ function Header() {
           <img src="scotty-labs-logo.png" alt="Scotty Labs Logo" />
       </Link>
       </div>
-      <section className="header-buttons">
-        <button id="aboutBtn">About</button>
-        <button id="teamBtn">Team</button>
-      </section>
     </header>
   );
 }
