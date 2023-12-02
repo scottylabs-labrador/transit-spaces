@@ -31,10 +31,10 @@ function Preferences() {
     if (selectedBuilding !== "") {
       const recommendedSeats = await getRecommendation();
       localStorage.setItem(
-        "recommendedSeats",
-        JSON.stringify(recommendedSeats)
+        "chosenSeat",
+        JSON.stringify(chosenSeat)
       );
-      navigate("/recommendations");
+      navigate("/feedback");
     } else {
       alert("Please fill in the required fields");
     }

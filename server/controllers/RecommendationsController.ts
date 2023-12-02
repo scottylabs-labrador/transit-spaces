@@ -44,19 +44,52 @@ export const getRecommendation = async (
 
     // If floor specified, subtract time between floors from predictedUnavailableUntil and re-sort
     // Choose seat that has the earliest predictedUnavailableUntil
-    if (floor) {
-      for (let i in seats) {
-        const predictedUnavailableUntil = seats[i].predictedUnavailableUntil;
-        const movementTime = Math.abs(floor - seats[i].floor) * floorMovementTime * 60000;
-        seats[i].predictedUnavailableUntil = new Date(predictedUnavailableUntil.getTime() - movementTime);
-      }
+    // if (floor) {
+    //   for (let i in seats) {
+    //     const predictedUnavailableUntil = seats[i].predictedUnavailableUntil;
+    //     const movementTime = Math.abs(floor - seats[i].floor) * floorMovementTime * 60000;
+    //     seats[i].predictedUnavailableUntil = new Date(predictedUnavailableUntil.getTime() - movementTime);
+    //   }
 
-      seats.sort((a, b) => {
-        return a.predictedUnavailableUntil.getTime() - b.predictedUnavailableUntil.getTime();
-      })
+    //   seats.sort((a, b) => {
+    //     return a.predictedUnavailableUntil.getTime() - b.predictedUnavailableUntil.getTime();
+    //   })
+    // }
+
+    let preferredSeat = null;
+
+    if (floor) {
+      const currentTime = new Date(); // Get current time
+    
+      // Filter seats for the same floor and in the past based on predictedUnavailableUntil
+      const sameFloorSeatsInPast = seats.filter(
+        seat => seat.floor === floor && seat.predictedUnavailableUntil.getTime() < currentTime.getTime()
+      );
+    
+      // Sort same floor seats by earliest predictedUnavailableUntil time
+      sameFloorSeatsInPast.sort((a, b) => a.predictedUnavailableUntil.getTime() - b.predictedUnavailableUntil.getTime());
+    
+      // If any seat on the same floor is in the past, choose the earliest one
+      if (sameFloorSeatsInPast.length > 0) {
+        preferredSeat = sameFloorSeatsInPast[0];
+      } else {
+        // No seats on the same floor in the past, find the earliest predictedUnavailableUntil
+        // considering traveling time between floors
+        seats.forEach(seat => {
+          const predictedUnavailableUntil = seat.predictedUnavailableUntil;
+          const movementTime = Math.abs(floor - seat.floor) * floorMovementTime * 60000;
+          seat.predictedUnavailableUntil = new Date(predictedUnavailableUntil.getTime() - movementTime);
+        });
+    
+        // Sort seats by the new predictedUnavailableUntil with travel time considered
+        seats.sort((a, b) => a.predictedUnavailableUntil.getTime() - b.predictedUnavailableUntil.getTime());
+    
+        // Select the seat with the earliest predictedUnavailableUntil considering travel time
+        preferredSeat = seats[0];
+      }
     }
 
-    const seat = seats[0];
+    const seat = preferredSeat!;  // informing TypeScript null-checking configuration that seat will have a non-null value using !
 
     // Update seat lastUpdatedAt to currentTime, predictedUnavailableUntil to currentTime + timeRequirement
     seat.lastUpdatedAt = new Date();

@@ -14,10 +14,6 @@ function Feedback() {
     setChosenSeat(storedChosenSeat);
   }, [navigate]);
 
-  const handleYesClick = () => {
-    setShowButtons(false);
-  };
-
   const handleNoClick = () => {
     const newRecommendationsMessage =
       "Sorry about that! Here is a new recommendations for you:";
@@ -50,15 +46,8 @@ function Feedback() {
           },
         })
           .then((res) => {
-            localStorage.setItem(
-              "recommendedSeats",
-              JSON.stringify([res.data])
-            );
-            localStorage.setItem(
-              "newRecommendationsMessage",
-              newRecommendationsMessage
-            );
-            navigate("/recommendations");
+            setChosenSeat(res.data)
+            setIsLoading(false)
           })
           .catch((err) => {
             console.log(err);
@@ -86,19 +75,16 @@ function Feedback() {
         <img
           src={chosenSeat.photo}
           alt={"Location"}
-          height={"30%"}
-          width={"30%"}
+          height={"50%"}
+          width={"50%"}
         />
       </h1>
       {showButtons ? (
         <div>
-          <p id="feedbackRequest">Were our recommendations correct?</p>
+          <p id="feedbackRequest">Was this seat available?</p>
           <div className="feedback-buttons">
-            <button id="YesBtn" onClick={handleYesClick}>
-              Yes
-            </button>
             <button id="NoBtn" onClick={handleNoClick} disabled={isLoading}>
-              No
+              No, give me another recommendation
             </button>
           </div>
         </div>
