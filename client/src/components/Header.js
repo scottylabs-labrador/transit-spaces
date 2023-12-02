@@ -10,9 +10,6 @@ function Header() {
           <img src="scotty-labs-logo.png" alt="Scotty Labs Logo" />
       </Link>
       </div>
-      <section className="header-text">
-        <p>CMU Seats</p>
-      </section>
     </header>
   );
 }

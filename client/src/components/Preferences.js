@@ -19,11 +19,12 @@ function Preferences() {
     })
       .then((res) => {
         setBuildings(res.data);
+        setSelectedBuilding(res.data[0].id)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [navigate]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,8 +33,9 @@ function Preferences() {
       const recommendedSeats = await getRecommendation();
       localStorage.setItem(
         "chosenSeat",
-        JSON.stringify(chosenSeat)
+        JSON.stringify(recommendedSeats[0])
       );
+      console.log(recommendedSeats)
       navigate("/feedback");
     } else {
       alert("Please fill in the required fields");

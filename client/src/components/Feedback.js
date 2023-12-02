@@ -68,18 +68,12 @@ function Feedback() {
 
   return (
     <div>
+      
       <h2 className="title">Chosen Location:</h2>
       <h1 className="centered-subtitle" id="chosenLocationDisplay">
         {chosenSeat.name}
         <br />
-        <img
-          src={chosenSeat.photo}
-          alt={"Location"}
-          height={"50%"}
-          width={"50%"}
-        />
-      </h1>
-      {showButtons ? (
+        {showButtons ? (
         <div>
           <p id="feedbackRequest">Was this seat available?</p>
           <div className="feedback-buttons">
@@ -99,6 +93,13 @@ function Feedback() {
           </button>
         </div>
       )}
+        <img
+          src={chosenSeat.photo}
+          alt={"Location"}
+          width={"80%"}
+        />
+      </h1>
+      
     </div>
   );
 }
