@@ -19,11 +19,12 @@ function Preferences() {
     })
       .then((res) => {
         setBuildings(res.data);
+        setSelectedBuilding(res.data[0].id)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [navigate]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
