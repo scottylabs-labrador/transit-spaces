@@ -49,7 +49,7 @@ export const getRecommendation = async (
       for (let i in seats) {
         const predictedUnavailableUntil = seats[i].predictedUnavailableUntil;
         const movementTime = Math.abs(floor - seats[i].floor) * floorMovementTime * 60000;
-        if (predictedUnavailableUntil.getTime()<currentTime.getTime()) {
+        if (predictedUnavailableUntil.getTime()<currentTime.getTime() - 6 * 3600000) { // change
           seats[i].predictedUnavailableUntil = new Date (currentTime.getTime() + movementTime)
         }
         else {
