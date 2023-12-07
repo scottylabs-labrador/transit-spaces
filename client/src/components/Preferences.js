@@ -14,12 +14,12 @@ function Preferences() {
 
   useEffect(() => {
     axios({
-      url: "https://cmu-seats.onrender.com/getBuildings",
+      url: "https://transit-spaces-hcgbrvfnma-ul.a.run.app/getBuildings",
       method: "GET",
     })
       .then((res) => {
         setBuildings(res.data);
-        setSelectedBuilding(res.data[0].id)
+        setSelectedBuilding(res.data[0].id);
       })
       .catch((err) => {
         console.log(err);
@@ -31,11 +31,8 @@ function Preferences() {
 
     if (selectedBuilding !== "") {
       const recommendedSeats = await getRecommendation();
-      localStorage.setItem(
-        "chosenSeat",
-        JSON.stringify(recommendedSeats[0])
-      );
-      console.log(recommendedSeats)
+      localStorage.setItem("chosenSeat", JSON.stringify(recommendedSeats[0]));
+      console.log(recommendedSeats);
       navigate("/feedback");
     } else {
       alert("Please fill in the required fields");
@@ -53,7 +50,7 @@ function Preferences() {
       selectedTimeRequirement.toString()
     );
     const res = await axios({
-      url: "https://cmu-seats.onrender.com/getRecommendation",
+      url: "https://transit-spaces-hcgbrvfnma-ul.a.run.app/getRecommendation",
       method: "POST",
       data: {
         buildingId: selectedBuilding,

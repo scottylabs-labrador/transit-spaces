@@ -27,7 +27,7 @@ function Feedback() {
     );
 
     axios({
-      url: "https://cmu-seats.onrender.com/updateAvailability",
+      url: "https://transit-spaces-hcgbrvfnma-ul.a.run.app/updateAvailability",
       method: "PUT",
       data: {
         seatId: chosenSeat.id,
@@ -36,7 +36,7 @@ function Feedback() {
     })
       .then(() => {
         axios({
-          url: "https://cmu-seats.onrender.com/getRecommendation",
+          url: "https://transit-spaces-hcgbrvfnma-ul.a.run.app/getRecommendation",
           method: "POST",
           data: {
             buildingId: selectedBuilding,
@@ -46,8 +46,8 @@ function Feedback() {
           },
         })
           .then((res) => {
-            setChosenSeat(res.data)
-            setIsLoading(false)
+            setChosenSeat(res.data);
+            setIsLoading(false);
           })
           .catch((err) => {
             console.log(err);
@@ -68,38 +68,32 @@ function Feedback() {
 
   return (
     <div>
-      
       <h2 className="title">Chosen Location:</h2>
       <h1 className="centered-subtitle" id="chosenLocationDisplay">
         {chosenSeat.name}
         <br />
         {showButtons ? (
-        <div>
-          <p id="feedbackRequest">Was this seat available?</p>
-          <div className="feedback-buttons">
-            <button id="NoBtn" onClick={handleNoClick} disabled={isLoading}>
-              No, give me another recommendation
+          <div>
+            <p id="feedbackRequest">Was this seat available?</p>
+            <div className="feedback-buttons">
+              <button id="NoBtn" onClick={handleNoClick} disabled={isLoading}>
+                No, give me another recommendation
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div id="thankYou">
+            <p id="thankYouMessage">
+              Thank you for using CMU Seats! Help us improve our recommendations
+              by indicating when you leave:
+            </p>
+            <button id="LeaveNowBtn" onClick={handleLeaveNowClick}>
+              I'm leaving now!
             </button>
           </div>
-        </div>
-      ) : (
-        <div id="thankYou">
-          <p id="thankYouMessage">
-            Thank you for using CMU Seats! Help us improve our recommendations
-            by indicating when you leave:
-          </p>
-          <button id="LeaveNowBtn" onClick={handleLeaveNowClick}>
-            I'm leaving now!
-          </button>
-        </div>
-      )}
-        <img
-          src={chosenSeat.photo}
-          alt={"Location"}
-          width={"80%"}
-        />
+        )}
+        <img src={chosenSeat.photo} alt={"Location"} width={"80%"} />
       </h1>
-      
     </div>
   );
 }
