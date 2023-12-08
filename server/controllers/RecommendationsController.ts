@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { error } from "../util/error";
 import { prisma } from "../db";
-import { floorMovementTime, lockTime } from "../util/constants";
+import { floorMovementTime, lockTime, resetTime } from "../util/constants";
 
 export const getRecommendation = async (
   req: Request,
@@ -42,19 +42,17 @@ export const getRecommendation = async (
       return;
     }
 
-    // If floor specified, subtract time between floors from predictedUnavailableUntil and re-sort
-    // Choose seat that has the earliest predictedUnavailableUntil
+    // If floor specified, the earliest time we can get an empty seat is
+    // the max of currentTime+movementTime and predictedUnavailableUntil + a 6h buffer/reset time
+    // choose seat that has the earliest predictedUnavailableUntil
     if (floor) {
       const currentTime = new Date();
       for (let i in seats) {
         const predictedUnavailableUntil = seats[i].predictedUnavailableUntil;
         const movementTime = Math.abs(floor - seats[i].floor) * floorMovementTime * 60000;
-        if (predictedUnavailableUntil.getTime()<currentTime.getTime() - 6 * 3600000) {
-          seats[i].predictedUnavailableUntil = new Date (currentTime.getTime() + movementTime)
-        }
-        else {
-          seats[i].predictedUnavailableUntil = new Date(predictedUnavailableUntil.getTime() + movementTime);
-        }
+
+        seats[i].predictedUnavailableUntil = new Date(Math.max(currentTime.getTime() + movementTime,
+            predictedUnavailableUntil.getTime() + resetTime * 3600000));
       }
 
       seats.sort((a, b) => {
