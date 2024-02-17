@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import * as Sentry from "@sentry/node";
 import { error } from "../util/error";
 import { prisma } from "../db";
 import { floorMovementTime, lockTime } from "../util/constants";
@@ -74,9 +75,22 @@ export const getRecommendation = async (
       }
     });
 
+    // log request and recommendation using Sentry
+    const reqmsg = `Request --> Building: ${buildingId}, Floor: ${floor}, Capacity: ${capacity}, Time Requirement: ${timeRequirement}`;
+    console.log(reqmsg);
+    Sentry.captureMessage(reqmsg, 'info');
+
+    const recmsg = `Recommendation --> Seat ID: ${seat.id}, Floor: ${seat.floor}, Capacity: ${seat.capacity}, Last Updated At: ${seat.lastUpdatedAt}, Predicted Unavailable Until: ${seat.predictedUnavailableUntil}`;
+    console.log(recmsg);
+    Sentry.captureMessage(recmsg, 'info');
+
     // Return seat
-    res.json(seat);
+    res.json({test: "test", seat: seat});
+
   } catch (err) {
+    // log error using Sentry
+    Sentry.captureException(err);
+
     console.error(err);
     return error(res);
   }
