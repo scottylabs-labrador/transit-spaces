@@ -92,7 +92,11 @@ function Feedback() {
             </button>
           </div>
         )}
-        <img src={chosenSeat.photo} alt={"Location"} width={"80%"} />
+        <img
+          src={`../.netlify/images?url=/seat-imgs/${chosenSeat.photo}&w=600`}
+          alt={"Location"}
+          width={"100%"}
+        />
       </h1>
     </div>
   );
