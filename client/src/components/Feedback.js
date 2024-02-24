@@ -59,7 +59,7 @@ function Feedback() {
   return (
     <div className="flex items-center justify-center my-10">
       <div className="max-w-lg bg-white mx-4 my-4 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <img className="object-contain rounded-t-lg" src={`../seat-imgs/${chosenSeat.photo}`} alt=""/>
+        <img className="object-contain rounded-t-lg" src={`../.netlify/images?url=/seat-imgs/${chosenSeat.photo}&w=600`} alt=""/>
         <div className="p-5">
           <p className="mb-2 my-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{chosenSeat.name}</p>
           {isLoading ? (
