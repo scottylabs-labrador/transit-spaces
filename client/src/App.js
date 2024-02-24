@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 /*In React Router v6, the Switch component has been replaced by the Routes component*/
-import './App.css';
+import './styles/globals.css';
 
 import Header from './components/Header';
 //import MainButtons from './components/MainButtons';
