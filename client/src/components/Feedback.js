@@ -4,7 +4,6 @@ import axios from "axios";
 
 function Feedback() {
   const [chosenSeat, setChosenSeat] = useState("");
-  const [showButtons, setShowButtons] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -15,10 +14,6 @@ function Feedback() {
   }, [navigate]);
 
   const handleNoClick = () => {
-    const newRecommendationsMessage =
-      "Sorry about that! Here is a new recommendations for you:";
-    setIsLoading(true);
-
     const selectedBuilding = localStorage.getItem("selectedBuilding");
     const selectedFloor = parseInt(localStorage.getItem("selectedFloor"));
     const selectedCapacity = parseInt(localStorage.getItem("selectedCapacity"));
@@ -59,45 +54,26 @@ function Feedback() {
       });
   };
 
-  const handleLeaveNowClick = () => {
-    window.alert(
-      "Thank you for using CMU spaces! Your feedback has been recorded."
-    );
-    window.location.href = "/";
-  };
-
   return (
-    <div>
-      <h2 className="title">Chosen Location:</h2>
-      <h1 className="centered-subtitle" id="chosenLocationDisplay">
-        {chosenSeat.name}
-        <br />
-        {showButtons ? (
-          <div>
-            <p id="feedbackRequest">Was this seat available?</p>
-            <div className="feedback-buttons">
-              <button id="NoBtn" onClick={handleNoClick} disabled={isLoading}>
-                No, give me another recommendation
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div id="thankYou">
-            <p id="thankYouMessage">
-              Thank you for using CMU Seats! Help us improve our recommendations
-              by indicating when you leave:
-            </p>
-            <button id="LeaveNowBtn" onClick={handleLeaveNowClick}>
-              I'm leaving now!
-            </button>
-          </div>
-        )}
-        <img
-          src={`../.netlify/images?url=/seat-imgs/${chosenSeat.photo}&w=600`}
-          alt={"Location"}
-          width={"70%"}
-        />
-      </h1>
+    <div className="flex items-center justify-center my-10">
+      <div className="max-w-lg bg-white mx-4 my-4 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <img className="rounded-t-lg" src={`../seat-imgs/${chosenSeat.photo}`} alt=""/>
+        <div className="p-5">
+          <p className="mb-2 my-3 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{chosenSeat.name}</p>
+          <button
+            id="submit-button"
+            onClick={handleNoClick}
+            className="w-full justify-center my-4 text-lg text-white disabled:bg-gray-700 bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-4 text-center inline-flex items-center">
+            Give me another recommendation
+            <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
     </div>
   );
 }
