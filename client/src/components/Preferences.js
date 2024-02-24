@@ -68,7 +68,7 @@ function Preferences() {
   const getBuildings = () => {
     return buildings.map((building, i) => {
       return (
-        <option value={building.id} key={i}>
+        <option value={building.id} key={i} selected>
           {building.name}
         </option>
       );
@@ -117,6 +117,20 @@ function Preferences() {
 
   return (
     <form className="max-w-sm mx-auto my-10">
+      <div className="mb-5">
+        <label htmlFor="building" className="block mb-2 text-lg font-medium text-gray-900">
+          Building<span className="text-red-500">*</span>
+        </label>
+        <select
+          id="building"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:bg-gray-200 disabled:cursor-not-allowed"
+          required
+          disabled
+        >
+          <option value="" disabled>Select</option>
+          {getBuildings()}
+        </select>
+      </div>
       <div className="mb-5">
         <label htmlFor="floor" className="block mb-2 text-lg font-medium text-gray-900">
           Floor<span className="text-red-500">*</span>
@@ -172,15 +186,16 @@ function Preferences() {
           onClick={handleSubmit}
           disabled={isLoading || selectedFloor === 0 || selectedCapacity === 0 || selectedTimeRequirement === 0}
           className="w-full justify-center text-lg text-white disabled:bg-gray-300 bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-4 text-center inline-flex items-center">
-            Find me a seat
-            <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                 fill="none" viewBox="0 0 14 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-            </svg>
-          </button>
+          Find me a seat
+          <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+               fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"/>
+          </svg>
+        </button>
       </div>
     </form>
-);
+  );
 }
 
 export default Preferences;
