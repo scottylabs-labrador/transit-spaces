@@ -100,17 +100,17 @@ function Preferences() {
 
   const getTimeRequirements = () => {
     return [
-      <option value={10} key={1}>
-        10min
-      </option>,
-      <option value={20} key={2}>
-        20min
-      </option>,
-      <option value={30} key={3}>
+      <option value={30} key={1}>
         30min
       </option>,
-      <option value={60} key={4}>
+      <option value={60} key={2}>
         1h
+      </option>,
+      <option value={120} key={3}>
+        2h
+      </option>,
+      <option value={180} key={4}>
+        3h
       </option>,
     ];
   };
