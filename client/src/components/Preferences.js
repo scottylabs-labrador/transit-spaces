@@ -116,82 +116,81 @@ function Preferences() {
   };
 
   return (
-    <div>
-      <h1 className="title">Input your preferences</h1>
-      <p id="asterisk-instructions">* Indicates required question</p>
-      <form>
-        <div className="form-group">
-          <label htmlFor="building">
-            Building<span className="red-asterisk">*</span>
-          </label>
-          <select
-            id="building"
-            className="select-box"
-            required
-            onChange={(e) => {
-              setSelectedBuilding(e.target.value);
-              setSelectedFloor(0);
-            }}
-          >
-            <option value="" disabled>
-              Select
-            </option>
-            {getBuildings()}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="floor">Floor</label>
-          <select
-            id="floor"
-            className="select-box"
-            onChange={(e) => {
-              setSelectedFloor(parseInt(e.target.value));
-            }}
-            value={selectedFloor}
-          >
-            <option value={0}>Select</option>
-            {getFloors()}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="capacity">Capacity</label>
-          <select
-            id="capacity"
-            className="select-box"
-            onChange={(e) => {
-              setSelectedCapacity(parseInt(e.target.value));
-            }}
-          >
-            <option value="">Select</option>
-            {getCapacities()}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="time-requirement">Time Requirement</label>
-          <select
-            id="time-requirement"
-            className="select-box"
-            onChange={(e) => {
-              setSelectedTimeRequirement(parseInt(e.target.value));
-            }}
-          >
-            <option value="">Select</option>
-            {getTimeRequirements()}
-          </select>
-        </div>
-        <div className="form-group">
-          <button
-            id="submit-button"
-            onClick={handleSubmit}
-            disabled={isLoading}
-          >
-            Submit
-          </button>
-          {/*Link is not used for the submit button because when clicked, it goes directly to the handleSubmit function*/}
-          {/*Thus, we import useNavigate to switch to the Recommendations page within the handleSubmit function*/}
-        </div>
-      </form>
-    </div>
+    <form className="max-w-sm mx-auto">
+      <div className="mb-5">
+        <label htmlFor="building" className="block mb-2 text-sm font-medium text-gray-900">
+          Building<span className="text-red-500">*</span>
+        </label>
+        <select
+          id="building"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
+          onChange={(e) => {
+            setSelectedBuilding(e.target.value);
+            setSelectedFloor(0);
+          }}
+        >
+          <option value="" disabled>Select</option>
+          {getBuildings()}
+        </select>
+      </div>
+      <div className="form-group">
+        <label htmlFor="floor" className="block mb-2 text-sm font-medium text-gray-900">
+          Floor<span className="text-red-500">*</span>
+        </label>
+        <select
+          id="floor"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          onChange={(e) => {
+            setSelectedFloor(parseInt(e.target.value));
+          }}
+          value={selectedFloor}
+        >
+          <option value={0}>Select</option>
+          {getFloors()}
+        </select>
+      </div>
+      <div className="form-group">
+        <label htmlFor="capacity" className="block mb-2 text-sm font-medium text-gray-900">
+          Capacity
+        </label>
+        <select
+          id="capacity"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          onChange={(e) => {
+            setSelectedCapacity(parseInt(e.target.value));
+          }}
+        >
+          <option value="">Select</option>
+          {getCapacities()}
+        </select>
+      </div>
+      <div className="form-group">
+        <label htmlFor="time-requirement" className="block mb-2 text-sm font-medium text-gray-900">
+          Time Requirement
+        </label>
+        <select
+          id="time-requirement"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          onChange={(e) => {
+            setSelectedTimeRequirement(parseInt(e.target.value));
+          }}
+        >
+          <option value="">Select</option>
+          {getTimeRequirements()}
+        </select>
+      </div>
+      <div className="form-group">
+        <button
+          id="submit-button"
+          onClick={handleSubmit}
+          disabled={isLoading}
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
   );
 }
 
