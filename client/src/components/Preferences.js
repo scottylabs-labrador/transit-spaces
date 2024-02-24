@@ -116,31 +116,15 @@ function Preferences() {
   };
 
   return (
-    <form className="max-w-sm mx-auto">
+    <form className="max-w-sm mx-auto my-10">
       <div className="mb-5">
-        <label htmlFor="building" className="block mb-2 text-sm font-medium text-gray-900">
-          Building<span className="text-red-500">*</span>
-        </label>
-        <select
-          id="building"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          required
-          onChange={(e) => {
-            setSelectedBuilding(e.target.value);
-            setSelectedFloor(0);
-          }}
-        >
-          <option value="" disabled>Select</option>
-          {getBuildings()}
-        </select>
-      </div>
-      <div className="form-group">
-        <label htmlFor="floor" className="block mb-2 text-sm font-medium text-gray-900">
+        <label htmlFor="floor" className="block mb-2 text-lg font-medium text-gray-900">
           Floor<span className="text-red-500">*</span>
         </label>
         <select
           id="floor"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
           onChange={(e) => {
             setSelectedFloor(parseInt(e.target.value));
           }}
@@ -150,13 +134,14 @@ function Preferences() {
           {getFloors()}
         </select>
       </div>
-      <div className="form-group">
-        <label htmlFor="capacity" className="block mb-2 text-sm font-medium text-gray-900">
-          Capacity
+      <div className="mb-5">
+        <label htmlFor="capacity" className="block mb-2 text-lg font-medium text-gray-900">
+          Capacity<span className="text-red-500">*</span>
         </label>
         <select
           id="capacity"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
           onChange={(e) => {
             setSelectedCapacity(parseInt(e.target.value));
           }}
@@ -165,13 +150,14 @@ function Preferences() {
           {getCapacities()}
         </select>
       </div>
-      <div className="form-group">
-        <label htmlFor="time-requirement" className="block mb-2 text-sm font-medium text-gray-900">
-          Time Requirement
+      <div className="mb-5">
+        <label htmlFor="time-requirement" className="block mb-2 text-lg font-medium text-gray-900">
+          Time Requirement<span className="text-red-500">*</span>
         </label>
         <select
           id="time-requirement"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          required
           onChange={(e) => {
             setSelectedTimeRequirement(parseInt(e.target.value));
           }}
@@ -180,18 +166,21 @@ function Preferences() {
           {getTimeRequirements()}
         </select>
       </div>
-      <div className="form-group">
+      <div className="form-group py-6">
         <button
           id="submit-button"
           onClick={handleSubmit}
-          disabled={isLoading}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Submit
-        </button>
+          disabled={isLoading || selectedFloor === 0 || selectedCapacity === 0 || selectedTimeRequirement === 0}
+          className="w-full justify-center text-lg text-white disabled:bg-gray-300 bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-4 text-center inline-flex items-center">
+            Find me a seat
+            <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </button>
       </div>
     </form>
-  );
+);
 }
 
 export default Preferences;
